@@ -3,6 +3,7 @@ import React from "react";
 import ButtonWithSound from "./ButtonWithSound";
 
 const MultiChoice = ({
+  fetchURL,
   questionArray,
   handleChoiceClick,
   resetAnswer,
@@ -11,11 +12,14 @@ const MultiChoice = ({
 }) => {
   return (
     <div className="position-up">
-      {questionArray.map((obj) => (
+      <p className="p-url">{fetchURL}</p>
+
+      {questionArray.map((obj, index) => (
         <div key={nanoid()}>
           <br />
           <h1 className="header-choice" key={obj.id}>
-            {obj.quiz}{" "}
+            <span className="header-num">{index + 1}</span> &nbsp;&nbsp;
+            {obj.quiz}
             {/* <button
               className={
                 obj.choices[0].isDisable

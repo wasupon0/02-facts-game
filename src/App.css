@@ -17,7 +17,7 @@
 
 body {
   background-color: var(--background-color);
-  font-family: Raleway, Inter;
+  font-family: Nunito, Inter;
   font-variant-numeric: tabular-nums;
   margin: 0;
   padding: 2rem;
@@ -139,6 +139,8 @@ button:focus {
 }
 
 button {
+  font-family: Nunito, Inter;
+  font-weight: bold;
   justify-content: center;
 }
 
@@ -164,6 +166,16 @@ button:hover {
   text-align: center;
 }
 
+.header-num {
+  background-color: var(--accent-color);
+  border-radius: 100%;
+  color: var(--primary-color);
+  color: white;
+  font-size: 1.25rem;
+  padding: 0 0.5rem 0 0.45rem;
+  text-align: center;
+}
+
 .button-choice {
   background-color: var(--secondary-color);
   border: transparent;
@@ -182,6 +194,7 @@ button:hover {
   color: var(--primary-color);
   cursor: pointer;
   font-size: 1rem;
+
   margin-top: 1rem;
   padding: 0.5rem 1rem;
 }
@@ -344,23 +357,24 @@ main.new-game > p {
 }
 
 form {
-  font-family: Raleway, Inter;
+  font-family: Nunito, Inter;
   font-variant-numeric: tabular-nums;
   margin: 1rem auto;
 }
 
 select {
-  font-family: Raleway, Inter;
+  font-family: Nunito, Inter;
   font-size: 1rem;
   font-variant-numeric: tabular-nums;
 }
 
-.form-category {
+.form-label {
   color: var(--text-color);
 }
 
-.form-difficulty {
+.p-url {
   color: var(--text-color);
+  font-size: 1rem;
 }
 
 @media screen and (min-width: 1440px) {

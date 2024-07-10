@@ -19,11 +19,13 @@ function App() {
   const [isReady, setIsReady] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+  const [formData, setFormData] = useState({
+    trivia_category: "9",
+    trivia_difficulty: "easy",
+    trivia_number_question: "5",
+  });
 
-  let [loading, setLoading] = useState(true);
-
-  const url =
-    "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple";
+  const url = `https://opentdb.com/api.php?amount=${formData.trivia_number_question}&category=${formData.trivia_category}&difficulty=${formData.trivia_difficulty}&type=multiple`;
 
   const toggleMute = () => {
     setIsMuted((prevIsMuted) => !prevIsMuted);
@@ -38,34 +40,36 @@ function App() {
   const selectSound = useRef(new Audio("/select_sound.wav"));
 
   const fetchData = async (url) => {
+    let timeoutId;
     try {
+      console.log("fetch!");
       const response = await fetch(url);
       const data = await response.json();
-      // console.log(data.results);
-
+      console.log(data.results);
       setQuestionArray(shuffleArray(data.results));
       setTotalScore(data.results.length);
-      setIsReady(true);
+
+      if ((await data.results.length) == formData.trivia_number_question) {
+        console.log("data length:", data.results.length);
+        console.log("num question: ", formData.trivia_number_question);
+        clearTimeout(timeoutId);
+        setIsReady(true);
+      } else {
+        setIsReady(false);
+      }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
+      if (!isReady) {
+        timeoutId = setTimeout(() => {
+          fetchData(url);
+        }, 1000);
+      }
     }
   };
 
   useEffect(() => {
-    let timeoutId;
-
     fetchData(url);
-
-    if (!isReady && isNewGame) {
-      timeoutId = setTimeout(() => {
-        location.reload();
-      }, 1000);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [isReady, isNewGame]);
+  }, [formData, isNewGame]);
 
   const shuffleArray = (originalArray) => {
     const newArray = [];
@@ -190,7 +194,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(questionArray);
+    //console.log(questionArray);
     const updatedScore = questionArray.map((obj) => {
       return obj.choices.reduce((acc, choice) => {
         if (choice.isSelected && choice.text === obj.answer) {
@@ -201,14 +205,14 @@ function App() {
       }, 0);
     });
 
-    console.log(`updatedScore Array: ${updatedScore}`);
+    //console.log(`updatedScore Array: ${updatedScore}`);
     setScore(updatedScore.reduce((acc, curr) => acc + curr, 0));
 
-    console.log("score: ", score);
+    //console.log("score: ", score);
   }, [questionArray]);
 
   useEffect(() => {
-    console.log("Updated score: ", score);
+    //console.log("Updated score: ", score);
   }, [score]);
 
   useEffect(() => {
@@ -249,6 +253,19 @@ function App() {
     setShowCorrectAnswer(false);
   };
 
+  function handleFormChange(event) {
+    //console.log(event);
+    setIsReady(false);
+    console.log(formData);
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
+  }
+
   return isNewGame ? (
     <main className="new-game ">
       <button
@@ -269,7 +286,7 @@ function App() {
         This is a facts game with 4 multiple choices. Choose one correct answer.
       </p>
 
-      <Form />
+      <Form formData={formData} handleFormChange={handleFormChange} />
 
       {isReady ? (
         <button className="button-new-game" onClick={startGame}>
@@ -278,7 +295,7 @@ function App() {
       ) : (
         <>
           <p className="error-fetch">fetching question, please wait...</p>
-          <BeatLoader className="loader" color="#D55E64" loading={loading} />
+          <BeatLoader className="loader" color="#D55E64" />
         </>
       )}
     </main>
@@ -300,6 +317,7 @@ function App() {
         ></button>
         <MultiChoice
           className="multi-choice"
+          fetchURL={url}
           questionArray={questionArray}
           handleChoiceClick={handleChoiceClick}
           resetAnswer={resetAnswer}
