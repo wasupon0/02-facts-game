@@ -28,22 +28,22 @@ const MultiChoice = ({
               ↻
             </button> */}
           </h1>
-
-          {obj.choices.map((choice, index) => (
-            <ButtonWithSound
-              className="button-choice "
-              key={`${obj.id}-${choice.text}`}
-              handleClick={() => handleChoiceClick(obj.id, choice.text)}
-              isDisable={choice.isDisable}
-              isSelected={choice.isSelected}
-              isCorrect={choice.isCorrect}
-              showCorrectAnswer={showCorrectAnswer}
-              isMuted={isMuted}
-            >
-              {choice.text}
-            </ButtonWithSound>
-          ))}
-
+          <div className="button_choice_container">
+            {obj.choices.map((choice, index) => (
+              <ButtonWithSound
+                className="button-choice"
+                key={`${obj.id}-${choice.text}`}
+                handleClick={() => handleChoiceClick(obj.id, choice.text)}
+                isDisable={choice.isDisable}
+                isSelected={choice.isSelected}
+                isCorrect={choice.isCorrect}
+                showCorrectAnswer={showCorrectAnswer}
+                isMuted={isMuted}
+              >
+                {choice.text}
+              </ButtonWithSound>
+            ))}
+          </div>
           <br />
           <br />
           <hr />

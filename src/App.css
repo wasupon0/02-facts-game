@@ -1,26 +1,44 @@
+:root {
+  --primary-color: #f5f2e6;
+  --secondary-color: #decd77;
+  --third-color: #272413;
+  --background-color: #565656;
+  --accent-color: #d55e64;
+  --disabled-color: grey;
+  --button-radius: 20px;
+  --text-color: white;
+}
+
+/* Rest of the CSS code */
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: #f5f7fb;
-  font-family: Karla, Inter;
+  background-color: var(--background-color);
+  font-family: Raleway, Inter;
   font-variant-numeric: tabular-nums;
   margin: 0;
   padding: 2rem;
 }
 
 main {
-  background: url("/blobs-yellow.svg") no-repeat right top,
-    url("/blobs-blue.svg") no-repeat left bottom;
-  border: 5px solid #a2acdb;
-  border-radius: 20px;
+  background: url("/blob-scene-mobile.svg") no-repeat center center;
+  background-size: cover;
+  border: 5px solid var(--secondary-color);
+  border-radius: var(--button-radius);
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  padding: 20px;
+  padding: var(--button-radius);
   position: relative;
+}
+
+main.start-game {
+  background: url("/pattern-bg.svg") repeat center center;
+  background-size: cover;
 }
 
 .position-up {
@@ -28,17 +46,22 @@ main {
 }
 
 .error-fetch {
-  color: #ff4655;
+  backdrop-filter: blur(100px);
+  border-radius: var(--button-radius);
+  color: var(--accent-color);
   font-size: 1rem;
   font-weight: bold;
+  margin: 0 auto;
   margin-top: 1rem;
+  max-width: fit-content;
+  padding: 0.25rem 1rem;
 }
 
 .button-reset {
   background-color: #9e4d54;
   border: none;
-  border-radius: 20px;
-  color: white;
+  border-radius: var(--button-radius);
+  color: var(--text-color);
   cursor: pointer;
   font-size: 1rem;
   font-weight: lighter;
@@ -50,10 +73,10 @@ main {
 }
 
 .button-reset-disabled {
-  background-color: grey;
+  background-color: var(--disabled-color);
   border: none;
-  border-radius: 20px;
-  color: white;
+  border-radius: var(--button-radius);
+  color: var(--text-color);
   cursor: not-allowed;
   font-size: 1rem;
   font-weight: lighter;
@@ -67,13 +90,13 @@ main {
 
 .reset-tag:hover {
   background-color: #9e4d54;
-  border-radius: 20px;
-  color: white;
+  border-radius: var(--button-radius);
+  color: var(--text-color);
   cursor: pointer;
   font-size: 1rem;
   font-weight: lighter;
   margin-top: 1rem;
-  outline: 1px solid #4d5b9e;
+  outline: 1px solid var(--third-color);
   padding: 0 0.5rem 0.2rem 0.5rem;
 }
 
@@ -84,11 +107,11 @@ main {
 }
 
 .space {
-  margin-left: 20px;
+  margin-left: var(--button-radius);
 }
 
 hr {
-  border: 1px solid #dbdef0;
+  border: none;
   margin: 1rem 0;
 }
 
@@ -126,25 +149,26 @@ button:active {
 }
 
 button:hover {
-  outline: 1px solid #4d5b9e;
+  outline: 2px solid var(--accent-color);
 }
 
 .title-choice {
-  color: #293264;
+  color: var(--primary-color);
   font-size: 2rem;
   margin-bottom: -1rem;
 }
 
 .header-choice {
-  color: #293264;
+  color: var(--primary-color);
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .button-choice {
-  background-color: #d6dbf5;
+  background-color: var(--secondary-color);
   border: transparent;
-  border-radius: 20px;
-  color: #293264;
+  border-radius: var(--button-radius);
+  color: var(--background-color);
   cursor: pointer;
   font-size: 1rem;
   margin-top: 1rem;
@@ -152,10 +176,10 @@ button:hover {
 }
 
 .button-answer {
-  background-color: #94d7a2;
+  background-color: #679e4d;
   border: transparent;
-  border-radius: 20px;
-  color: #293264;
+  border-radius: var(--button-radius);
+  color: var(--primary-color);
   cursor: pointer;
   font-size: 1rem;
   margin-top: 1rem;
@@ -163,10 +187,10 @@ button:hover {
 }
 
 .button-wrong {
-  background-color: #f8bcbc;
+  background-color: #9e4d54;
   border: none;
-  border-radius: 20px;
-  color: #293264;
+  border-radius: var(--button-radius);
+  color: var(--primary-color);
   cursor: pointer;
   font-size: 1rem;
   margin-top: 1rem;
@@ -174,21 +198,22 @@ button:hover {
 }
 
 .button-selected {
-  background-color: #293264;
+  background-color: var(--third-color);
   border: none;
-  border-radius: 20px;
-  color: #d6dbf5;
+  border-radius: var(--button-radius);
+  color: var(--secondary-color);
   cursor: pointer;
   font-size: 1rem;
   margin-top: 1rem;
+  outline: none;
   padding: 0.5rem 1rem;
 }
 
 .button-disabled {
-  background-color: grey;
+  background-color: var(--disabled-color);
   border: none;
-  border-radius: 20px;
-  color: #d6dbf5;
+  border-radius: var(--button-radius);
+  color: var(--secondary-color);
   cursor: pointer;
   font-size: 1rem;
   margin-top: 1rem;
@@ -198,7 +223,7 @@ button:hover {
 .button-disabled-end {
   background-color: transparent;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--button-radius);
   color: #8f94af;
   cursor: pointer;
   font-size: 1rem;
@@ -212,7 +237,7 @@ button:hover {
 }
 
 main.new-game > h1 {
-  color: #293264;
+  color: var(--primary-color);
   text-align: center;
 }
 
@@ -232,18 +257,22 @@ main.new-game > p {
 }
 
 .button-new-game {
-  background-color: #4d5b9e;
+  background-color: var(--secondary-color);
   border: none;
   border-radius: 5px;
-  color: #fff;
+  color: var(--third-color);
   cursor: pointer;
   font-size: 1rem;
+  font-weight: bold;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
 }
 
+.button-new-game:hover {
+  outline: 3px solid #d55e64;
+}
 .button-restart {
   align-self: center;
   background-color: #9e4d54;
@@ -271,16 +300,72 @@ main.new-game > p {
   width: 200px;
 }
 
+.button_choice_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 .total-score {
-  color: #293264;
+  color: var(--primary-color);
   margin-bottom: 0;
   margin-top: 2rem;
   text-align: center;
 }
 
 .error-fetch {
-  color: #ff4655;
+  color: var(--accent-color);
   font-size: 1rem;
   font-weight: bold;
   margin-top: 1rem;
+}
+
+.p-music {
+  color: var(--text-color);
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  text-align: right;
+}
+
+.p-new-game {
+  color: var(--text-color);
+  font-size: 1.25rem;
+}
+
+.loader {
+  bottom: 1rem;
+  left: 1rem;
+  position: absolute;
+}
+
+form {
+  font-family: Raleway, Inter;
+  font-variant-numeric: tabular-nums;
+  margin: 1rem auto;
+}
+
+select {
+  font-family: Raleway, Inter;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.form-category {
+  color: var(--text-color);
+}
+
+.form-difficulty {
+  color: var(--text-color);
+}
+
+@media screen and (min-width: 1440px) {
+  main {
+    background: url("/blob-scene.svg") no-repeat center center;
+    background-size: cover;
+  }
 }

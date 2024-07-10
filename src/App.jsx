@@ -1,9 +1,11 @@
 import { decode } from "html-entities";
 import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
+import { BeatLoader } from "react-spinners";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./App.css";
 import sampleArray from "./assets/sampleArray";
+import Form from "./components/Form";
 import MultiChoice from "./components/MultiChoice";
 import unmuteImage from "/mute-off.svg";
 import muteImage from "/mute-on.svg";
@@ -19,7 +21,6 @@ function App() {
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
   let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("red");
 
   const url =
     "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple";
@@ -264,63 +265,66 @@ function App() {
         className="button-mute"
       ></button>
       <h1>Facts Game</h1>
-      <p>
+      <p className="p-new-game">
         This is a facts game with 4 multiple choices. Choose one correct answer.
       </p>
+
+      <Form />
+
       {isReady ? (
         <button className="button-new-game" onClick={startGame}>
           Start Game
         </button>
       ) : (
         <>
-          <p className="error-fetch">
-            Can not fetch question, please wait until start button shows up
-          </p>
-          <ClipLoader
-            color={color}
-            loading={loading}
-            size={50}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
+          <p className="error-fetch">fetching question, please wait...</p>
+          <BeatLoader className="loader" color="#D55E64" loading={loading} />
         </>
       )}
     </main>
   ) : (
-    <main className="start-game">
-      <button
-        onClick={toggleMute}
-        style={{
-          background: `url(${
-            isMuted ? muteImage : unmuteImage
-          }) no-repeat center/cover`,
-          width: "50px",
-          height: "50px",
-          border: "none",
-          outline: "none",
-        }}
-        className="button-mute"
-      ></button>
-      <MultiChoice
-        questionArray={questionArray}
-        handleChoiceClick={handleChoiceClick}
-        resetAnswer={resetAnswer}
-        showCorrectAnswer={showCorrectAnswer}
-        isMuted={isMuted}
-      />
-      <button className="button-calculate" onClick={endGame}>
-        Calculate Score
-      </button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button className="button-restart" onClick={restartGame}>
-        Restart Game
-      </button>
-      {isEndGame ? (
-        <h1 className="total-score">Total Score: {`${score}/${totalScore}`}</h1>
-      ) : (
-        <></>
-      )}
-    </main>
+    <>
+      <main className="start-game">
+        <button
+          onClick={toggleMute}
+          style={{
+            background: `url(${
+              isMuted ? muteImage : unmuteImage
+            }) no-repeat center/cover`,
+            width: "50px",
+            height: "50px",
+            border: "none",
+            outline: "none",
+          }}
+          className="button-mute"
+        ></button>
+        <MultiChoice
+          className="multi-choice"
+          questionArray={questionArray}
+          handleChoiceClick={handleChoiceClick}
+          resetAnswer={resetAnswer}
+          showCorrectAnswer={showCorrectAnswer}
+          isMuted={isMuted}
+        />
+        <button className="button-calculate" onClick={endGame}>
+          Calculate Score
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-restart" onClick={restartGame}>
+          Restart Game
+        </button>
+        {isEndGame ? (
+          <h1 className="total-score">
+            Total Score: {`${score}/${totalScore}`}
+          </h1>
+        ) : (
+          <></>
+        )}
+      </main>
+      <div className="p-music">
+        <strong>Music:</strong> Lend a Hand - By Ryan James Carr
+      </div>
+    </>
   );
 }
 
