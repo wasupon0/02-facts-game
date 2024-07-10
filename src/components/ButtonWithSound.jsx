@@ -18,11 +18,17 @@ const ButtonWithSound = ({
   const playHoverSound = () => {
     hoverSound.current.volume = 0.05;
     hoverSound.current.play();
+    hoverSound.current.onended = function () {
+      this.remove();
+    };
   };
 
   const playClickSound = () => {
     selectSound.current.volume = 0.25;
     selectSound.current.play();
+    selectSound.current.onended = function () {
+      this.remove();
+    };
   };
 
   useEffect(() => {
