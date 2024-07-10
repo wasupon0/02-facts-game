@@ -169,7 +169,6 @@ button:hover {
 .header-num {
   background-color: var(--accent-color);
   border-radius: 100%;
-  color: var(--primary-color);
   color: white;
   font-size: 1.25rem;
   padding: 0 0.5rem 0 0.45rem;
@@ -375,6 +374,16 @@ select {
 .p-url {
   color: var(--text-color);
   font-size: 1rem;
+}
+
+.span-form {
+  background-color: var(--accent-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-right: 2rem;
+  padding: 0 0.5rem 0 0.45rem;
+  text-align: center;
 }
 
 @media screen and (min-width: 1440px) {

@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid";
-import React from "react";
 import ButtonWithSound from "./ButtonWithSound";
+import getCategoryName from "./getCategoryName";
 
 const MultiChoice = ({
   fetchURL,
+  formData,
   questionArray,
   handleChoiceClick,
   resetAnswer,
@@ -12,7 +13,18 @@ const MultiChoice = ({
 }) => {
   return (
     <div className="position-up">
-      <p className="p-url">{fetchURL}</p>
+      {/* <p className="p-url">{fetchURL}</p> */}
+      <br />
+      <span className="span-form">
+        {formData.trivia_number_question} Questions
+      </span>
+      <span className="span-form">
+        {getCategoryName(formData.trivia_category)}
+      </span>
+      <span className="span-form">
+        {formData.trivia_difficulty.slice(0, 1).toUpperCase() +
+          formData.trivia_difficulty.slice(1)}
+      </span>
 
       {questionArray.map((obj, index) => (
         <div key={nanoid()}>

@@ -34,6 +34,8 @@ function App() {
   useEffect(() => {
     newGameSound.current.muted = isMuted;
     selectSound.current.muted = isMuted;
+    gameMusic.current.muted = isMuted;
+    endgameMusic.current.muted = isMuted;
   }, [isMuted]);
 
   const newGameSound = useRef(new Audio("/new_game_sound.wav"));
@@ -46,12 +48,14 @@ function App() {
       const response = await fetch(url);
       const data = await response.json();
       console.log(data.results);
-      setQuestionArray(shuffleArray(data.results));
-      setTotalScore(data.results.length);
 
       if ((await data.results.length) == formData.trivia_number_question) {
         console.log("data length:", data.results.length);
         console.log("num question: ", formData.trivia_number_question);
+
+        setQuestionArray(shuffleArray(data.results));
+        setTotalScore(data.results.length);
+
         clearTimeout(timeoutId);
         setIsReady(true);
       } else {
@@ -112,6 +116,32 @@ function App() {
 
     // console.log(newArray);
     return newArray;
+  };
+
+  const gameMusic = useRef(new Audio("/game_music.mp3"));
+  const endgameMusic = useRef(new Audio("/endgame_music.mp3"));
+
+  const playGameMusic = () => {
+    gameMusic.current.volume = 0.15;
+    gameMusic.current.loop = true;
+    gameMusic.current.play();
+  };
+
+  const stopGameMusic = () => {
+    gameMusic.current.volume = 0.15;
+    gameMusic.current.pause();
+    gameMusic.current.currentTime = 0; // Reset playback position
+  };
+
+  const playEndGameMusic = () => {
+    endgameMusic.current.volume = 0.15;
+    endgameMusic.current.play();
+  };
+
+  const stopEndGameMusic = () => {
+    endgameMusic.current.volume = 0.15;
+    endgameMusic.current.pause();
+    endgameMusic.current.currentTime = 0; // Reset playback position
   };
 
   const playNewGameSound = () => {
@@ -233,18 +263,25 @@ function App() {
   }, [showCorrectAnswer]);
 
   const startGame = () => {
+    playGameMusic();
+
     playNewGameSound();
+
     setScore(0);
     setIsNewGame(false);
   };
 
   const endGame = () => {
+    stopGameMusic();
+    playEndGameMusic();
     playNewGameSound();
     setIsEndGame(true);
     setShowCorrectAnswer((prev) => !prev);
   };
 
   const restartGame = () => {
+    stopGameMusic();
+    stopEndGameMusic();
     playNewGameSound();
     setScore(0);
     setIsEndGame(false);
@@ -318,6 +355,7 @@ function App() {
         <MultiChoice
           className="multi-choice"
           fetchURL={url}
+          formData={formData}
           questionArray={questionArray}
           handleChoiceClick={handleChoiceClick}
           resetAnswer={resetAnswer}
@@ -340,7 +378,9 @@ function App() {
         )}
       </main>
       <div className="p-music">
-        <strong>Music:</strong> Lend a Hand - By Ryan James Carr
+        <strong>Music 1:</strong> Lend a Hand - By Ryan James Carr
+        <br />
+        <strong>Music 2:</strong> What I Want - By PØW
       </div>
     </>
   );
