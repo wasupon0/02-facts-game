@@ -13,7 +13,7 @@ const MultiChoice = ({
 }) => {
   return (
     <div className="position-up">
-      {/* <p className="p-url">{fetchURL}</p> */}
+      <p className="p-url">{fetchURL}</p>
       <br />
       <span className="span-form">
         {formData.trivia_number_question} Questions
@@ -29,7 +29,7 @@ const MultiChoice = ({
       {questionArray.map((obj, index) => (
         <div key={nanoid()}>
           <br />
-          <h1 className="header-choice" key={obj.id}>
+          <h1 className="header-choice" key={`${obj.id}-${nanoid()}`}>
             <span className="header-num">{index + 1}</span> &nbsp;&nbsp;
             {obj.quiz}
             {/* <button
@@ -48,7 +48,7 @@ const MultiChoice = ({
             {obj.choices.map((choice, index) => (
               <ButtonWithSound
                 className="button-choice"
-                key={`${obj.id}-${choice.text}`}
+                key={`${obj.id}-${choice.text}-${nanoid()}`}
                 handleClick={() => handleChoiceClick(obj.id, choice.text)}
                 isDisable={choice.isDisable}
                 isSelected={choice.isSelected}

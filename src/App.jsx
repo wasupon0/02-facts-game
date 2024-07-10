@@ -1,4 +1,4 @@
-import { decode } from "html-entities";
+import AbortController from "abort-controller";
 import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
 import { BeatLoader } from "react-spinners";
@@ -41,37 +41,45 @@ function App() {
   const newGameSound = useRef(new Audio("/new_game_sound.wav"));
   const selectSound = useRef(new Audio("/select_sound.wav"));
 
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  function decode(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    //console.log(txt.value);
+    return txt.value;
+  }
+
   const fetchData = async (url) => {
     let timeoutId;
     try {
       console.log("fetch!");
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data.results);
-
-      if ((await data.results.length) == formData.trivia_number_question) {
-        console.log("data length:", data.results.length);
-        console.log("num question: ", formData.trivia_number_question);
-
-        setQuestionArray(shuffleArray(data.results));
-        setTotalScore(data.results.length);
-
-        clearTimeout(timeoutId);
-        setIsReady(true);
-      } else {
-        setIsReady(false);
-      }
-    } catch (error) {
-      //console.error(error);
       if (!isReady) {
-        timeoutId = setTimeout(() => {
-          fetchData(url);
-        }, 1000);
+        const response = await fetch(url);
+
+        if (response.status !== 200) {
+          setTimeout(() => {
+            fetchData(url);
+          }, 1000);
+        } else if (response.status === 200) {
+          const data = await response.json();
+          setIsReady(true);
+
+          console.log(data.results);
+          console.log("data length:", data.results.length);
+          console.log("num question: ", formData.trivia_number_question);
+          setQuestionArray(shuffleArray(data.results));
+          setTotalScore(data.results.length);
+        }
       }
+    } catch (e) {
+      if (e instanceof Error) console.log(e.stack);
     }
   };
 
   useEffect(() => {
+    console.log("useEffect fetch");
     fetchData(url);
   }, [formData, isNewGame]);
 
@@ -90,8 +98,11 @@ function App() {
         id: nanoid(),
         quiz: decode(JSON.parse(JSON.stringify(obj.question))),
         answer: decode(JSON.parse(JSON.stringify(obj.correct_answer))),
-        choices: decode(JSON.parse(JSON.stringify(obj.incorrect_answers))),
+        choices: decode(
+          JSON.parse(JSON.stringify(obj.incorrect_answers))
+        ).split(","),
       };
+      //console.log(newObj);
 
       // insert correct answer at random index in choices array
       newObj.choices.splice(
