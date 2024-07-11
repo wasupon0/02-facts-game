@@ -56,8 +56,8 @@ main {
 }
 
 main.start-game {
-  background: url("/pattern-bg.svg") repeat center center;
-  background-size: cover;
+  background: url("/pattern-bg.svg") repeat left center;
+  background-size: contain;
 }
 
 .position-up {
@@ -159,7 +159,7 @@ button:focus {
 
 button {
   font-family: Nunito, Inter;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: bold;
   justify-content: center;
 }
