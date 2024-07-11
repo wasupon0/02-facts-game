@@ -1,10 +1,11 @@
 import AbortController from "abort-controller";
 import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
+import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import { BeatLoader } from "react-spinners";
-import ClipLoader from "react-spinners/ClipLoader";
 import "./App.css";
 import sampleArray from "./assets/sampleArray";
+import Confetti from "./components/Confetti";
 import Form from "./components/Form";
 import MultiChoice from "./components/MultiChoice";
 import unmuteImage from "/mute-off.svg";
@@ -108,7 +109,7 @@ function App() {
       newObj.choices.splice(
         randomIndex,
         0,
-        JSON.parse(JSON.stringify(obj.correct_answer))
+        decode(JSON.parse(JSON.stringify(obj.correct_answer)))
       );
 
       // map to each choice in the choices array and create new object with isSelected key
@@ -133,24 +134,24 @@ function App() {
   const endgameMusic = useRef(new Audio("/endgame_music.mp3"));
 
   const playGameMusic = () => {
-    gameMusic.current.volume = 0.15;
+    gameMusic.current.volume = 0.015;
     gameMusic.current.loop = true;
     gameMusic.current.play();
   };
 
   const stopGameMusic = () => {
-    gameMusic.current.volume = 0.15;
+    gameMusic.current.volume = 0.015;
     gameMusic.current.pause();
     gameMusic.current.currentTime = 0; // Reset playback position
   };
 
   const playEndGameMusic = () => {
-    endgameMusic.current.volume = 0.15;
+    endgameMusic.current.volume = 0.015;
     endgameMusic.current.play();
   };
 
   const stopEndGameMusic = () => {
-    endgameMusic.current.volume = 0.15;
+    endgameMusic.current.volume = 0.015;
     endgameMusic.current.pause();
     endgameMusic.current.currentTime = 0; // Reset playback position
   };
@@ -381,9 +382,12 @@ function App() {
           Restart Game
         </button>
         {isEndGame ? (
-          <h1 className="total-score">
-            Total Score: {`${score}/${totalScore}`}
-          </h1>
+          <>
+            <h1 className="total-score">
+              Total Score: {`${score}/${totalScore}`}
+            </h1>
+            <Confetti />
+          </>
         ) : (
           <></>
         )}

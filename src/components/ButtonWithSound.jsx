@@ -18,23 +18,25 @@ const ButtonWithSound = ({
   const playHoverSound = () => {
     hoverSound.current.volume = 0.05;
     hoverSound.current.play();
-    hoverSound.current.onended = function () {
-      this.remove();
-    };
   };
 
   const playClickSound = () => {
     selectSound.current.volume = 0.25;
     selectSound.current.play();
-    selectSound.current.onended = function () {
-      this.remove();
-    };
   };
 
   useEffect(() => {
     hoverSound.current.muted = isMuted;
     selectSound.current.muted = isMuted;
   }, [isMuted]);
+
+  useEffect(() => {
+    // Cleanup function to run when the component is unmounted
+    return () => {
+      hoverSound.current.src = null;
+      selectSound.current.src = null;
+    };
+  }, []);
 
   return (
     <>
