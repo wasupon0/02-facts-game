@@ -19,8 +19,15 @@ body {
   background-color: var(--background-color);
   font-family: Nunito, Inter;
   font-variant-numeric: tabular-nums;
-  margin: 0;
-  padding: 2rem;
+  height: 100vh;
+  margin: 0rem;
+  padding: 0.25rem;
+}
+
+.main-container {
+  display: flex;
+  height: 99vh;
+  margin: 0rem;
 }
 
 main {
@@ -30,8 +37,6 @@ main {
   border-radius: var(--button-radius);
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
   padding: var(--button-radius);
   position: relative;
 }
@@ -140,6 +145,7 @@ button:focus {
 
 button {
   font-family: Nunito, Inter;
+  font-size: 0.75rem;
   font-weight: bold;
   justify-content: center;
 }
@@ -162,7 +168,7 @@ button:hover {
 
 .header-choice {
   color: var(--primary-color);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   text-align: center;
 }
 
@@ -181,7 +187,6 @@ button:hover {
   border-radius: var(--button-radius);
   color: var(--background-color);
   cursor: pointer;
-  font-size: 1rem;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
 }
@@ -192,7 +197,6 @@ button:hover {
   border-radius: var(--button-radius);
   color: var(--primary-color);
   cursor: pointer;
-  font-size: 1rem;
 
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -204,7 +208,6 @@ button:hover {
   border-radius: var(--button-radius);
   color: var(--primary-color);
   cursor: pointer;
-  font-size: 1rem;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
 }
@@ -215,7 +218,6 @@ button:hover {
   border-radius: var(--button-radius);
   color: var(--secondary-color);
   cursor: pointer;
-  font-size: 1rem;
   margin-top: 1rem;
   outline: none;
   padding: 0.5rem 1rem;
@@ -246,6 +248,12 @@ button:hover {
 
 .button-disabled-end:hover {
   cursor: not-allowed;
+}
+
+main.new-game {
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
 }
 
 main.new-game > h1 {
@@ -336,11 +344,12 @@ main.new-game > p {
 
 .p-music {
   color: var(--text-color);
+  font-size: 0.7rem;
   margin: 0;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 16px;
-  padding-top: 16px;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
   text-align: right;
 }
 
@@ -373,22 +382,78 @@ select {
 
 .p-url {
   color: var(--text-color);
-  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  margin-bottom: 0;
 }
 
 .span-form {
   background-color: var(--accent-color);
   border-radius: 8px;
   color: var(--text-color);
-  font-size: 1rem;
-  margin-right: 2rem;
+  font-size: 0.75rem;
   padding: 0 0.5rem 0 0.45rem;
   text-align: center;
 }
 
+.span-url {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  color: var(--third-color);
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  padding: 0 0.5rem 0 0.45rem;
+  text-align: center;
+}
+
+.span-url:hover {
+  cursor: pointer;
+  outline: 2px solid var(--accent-color);
+}
+
+.span_data_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+@media screen and (min-width: 768px) {
+  .p-url {
+    font-size: 1rem;
+  }
+
+  .p-music {
+    font-size: 1rem;
+  }
+
+  .span-form {
+    font-size: 1rem;
+  }
+
+  .span-url {
+    font-size: 1rem;
+  }
+
+  .header-choice {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
 @media screen and (min-width: 1440px) {
-  main {
-    background: url("/blob-scene.svg") no-repeat center center;
-    background-size: cover;
+  .p-url {
+    color: var(--text-color);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1rem;
   }
 }

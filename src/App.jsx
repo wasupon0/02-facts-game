@@ -53,7 +53,6 @@ function App() {
   }
 
   const fetchData = async (url) => {
-    let timeoutId;
     try {
       console.log("fetch!");
       if (!isReady) {
@@ -65,7 +64,12 @@ function App() {
           }, 1000);
         } else if (response.status === 200) {
           const data = await response.json();
-          setIsReady(true);
+
+          if (data.results.length > 0) {
+            setIsReady(true);
+          } else {
+            alert("No question found. Please select different option.");
+          }
 
           console.log(data.results);
           console.log("data length:", data.results.length);
@@ -134,24 +138,24 @@ function App() {
   const endgameMusic = useRef(new Audio("/endgame_music.mp3"));
 
   const playGameMusic = () => {
-    gameMusic.current.volume = 0.015;
+    gameMusic.current.volume = 0.15;
     gameMusic.current.loop = true;
     gameMusic.current.play();
   };
 
   const stopGameMusic = () => {
-    gameMusic.current.volume = 0.015;
+    gameMusic.current.volume = 0.15;
     gameMusic.current.pause();
     gameMusic.current.currentTime = 0; // Reset playback position
   };
 
   const playEndGameMusic = () => {
-    endgameMusic.current.volume = 0.015;
+    endgameMusic.current.volume = 0.15;
     endgameMusic.current.play();
   };
 
   const stopEndGameMusic = () => {
-    endgameMusic.current.volume = 0.015;
+    endgameMusic.current.volume = 0.15;
     endgameMusic.current.pause();
     endgameMusic.current.currentTime = 0; // Reset playback position
   };
@@ -316,38 +320,45 @@ function App() {
   }
 
   return isNewGame ? (
-    <main className="new-game ">
-      <button
-        onClick={toggleMute}
-        style={{
-          background: `url(${
-            isMuted ? muteImage : unmuteImage
-          }) no-repeat center/cover`,
-          width: "50px",
-          height: "50px",
-          border: "none",
-          outline: "none",
-        }}
-        className="button-mute"
-      ></button>
-      <h1>Facts Game</h1>
-      <p className="p-new-game">
-        This is a facts game with 4 multiple choices. Choose one correct answer.
-      </p>
+    <div className="main-container">
+      <main className="new-game ">
+        <button
+          onClick={toggleMute}
+          style={{
+            background: `url(${
+              isMuted ? muteImage : unmuteImage
+            }) no-repeat center/cover`,
+            width: "50px",
+            height: "50px",
+            border: "none",
+            outline: "none",
+          }}
+          className="button-mute"
+        ></button>
+        <h1>Facts Game</h1>
+        <p className="p-new-game">
+          This is a facts game with 4 multiple choices. Choose one correct
+          answer.
+        </p>
 
-      <Form formData={formData} handleFormChange={handleFormChange} />
+        <Form formData={formData} handleFormChange={handleFormChange} />
 
-      {isReady ? (
-        <button className="button-new-game" onClick={startGame}>
-          Start Game
-        </button>
-      ) : (
-        <>
-          <p className="error-fetch">fetching question, please wait...</p>
-          <BeatLoader className="loader" color="#D55E64" />
-        </>
-      )}
-    </main>
+        {isReady ? (
+          <>
+            <button className="button-new-game" onClick={startGame}>
+              Start Game
+            </button>
+            <br />
+          </>
+        ) : (
+          <>
+            <p className="error-fetch">fetching question, please wait...</p>
+            <br />
+            <BeatLoader className="loader" color="#D55E64" />
+          </>
+        )}
+      </main>
+    </div>
   ) : (
     <>
       <main className="start-game">

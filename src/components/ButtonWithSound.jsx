@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import useAudioManager from "./useAudioManager";
 
 const ButtonWithSound = ({
   isSelected,
@@ -12,31 +13,7 @@ const ButtonWithSound = ({
 
   ...props
 }) => {
-  const hoverSound = useRef(new Audio("/hover_sound.wav"));
-  const selectSound = useRef(new Audio("/select_sound.wav"));
-
-  const playHoverSound = () => {
-    hoverSound.current.volume = 0.05;
-    hoverSound.current.play();
-  };
-
-  const playClickSound = () => {
-    selectSound.current.volume = 0.25;
-    selectSound.current.play();
-  };
-
-  useEffect(() => {
-    hoverSound.current.muted = isMuted;
-    selectSound.current.muted = isMuted;
-  }, [isMuted]);
-
-  useEffect(() => {
-    // Cleanup function to run when the component is unmounted
-    return () => {
-      hoverSound.current.src = null;
-      selectSound.current.src = null;
-    };
-  }, []);
+  const { playHoverSound, playClickSound } = useAudioManager();
 
   return (
     <>
@@ -52,9 +29,11 @@ const ButtonWithSound = ({
               : className
           }
           disabled={isDisable}
-          onMouseEnter={playHoverSound}
+          onMouseEnter={() => {
+            playHoverSound(isMuted);
+          }}
           onClick={() => {
-            playClickSound();
+            playClickSound(isMuted);
             handleClick();
           }}
           {...props}
@@ -71,9 +50,11 @@ const ButtonWithSound = ({
               : className
           }
           disabled={isDisable}
-          onMouseEnter={playHoverSound}
+          onMouseEnter={() => {
+            playHoverSound(isMuted);
+          }}
           onClick={() => {
-            playClickSound();
+            playClickSound(isMuted);
             handleClick();
           }}
           {...props}
