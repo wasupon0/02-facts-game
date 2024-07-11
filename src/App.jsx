@@ -7,6 +7,7 @@ import "./App.css";
 import sampleArray from "./assets/sampleArray";
 import Confetti from "./components/Confetti";
 import Form from "./components/Form";
+import getCategoryName from "./components/getCategoryName";
 import MultiChoice from "./components/MultiChoice";
 import unmuteImage from "/mute-off.svg";
 import muteImage from "/mute-on.svg";
@@ -25,8 +26,10 @@ function App() {
     trivia_difficulty: "easy",
     trivia_number_question: "5",
   });
-
-  const url = `https://opentdb.com/api.php?amount=${formData.trivia_number_question}&category=${formData.trivia_category}&difficulty=${formData.trivia_difficulty}&type=multiple`;
+  const controllerRef = useRef();
+  const urlRef = useRef(
+    `https://opentdb.com/api.php?amount=${"5"}&category=${"9"}&difficulty=${"easy"}&type=multiple`
+  );
 
   const toggleMute = () => {
     setIsMuted((prevIsMuted) => !prevIsMuted);
@@ -39,12 +42,6 @@ function App() {
     endgameMusic.current.muted = isMuted;
   }, [isMuted]);
 
-  const newGameSound = useRef(new Audio("/new_game_sound.wav"));
-  const selectSound = useRef(new Audio("/select_sound.wav"));
-
-  const controller = new AbortController();
-  const signal = controller.signal;
-
   function decode(html) {
     const txt = document.createElement("textarea");
     txt.innerHTML = html;
@@ -53,29 +50,37 @@ function App() {
   }
 
   const fetchData = async (url) => {
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+
     try {
       console.log("fetch!");
       if (!isReady) {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal });
 
         if (response.status !== 200) {
           setTimeout(() => {
             fetchData(url);
-          }, 1000);
+          }, 1000); // retry fetch
         } else if (response.status === 200) {
           const data = await response.json();
 
-          if (data.results.length > 0) {
+          if (
+            data.results.length === parseInt(formData.trivia_number_question) &&
+            data.results[0].category ===
+              getCategoryName(formData.trivia_category) &&
+            data.results[0].difficulty === formData.trivia_difficulty
+          ) {
+            setQuestionArray(shuffleArray(data.results));
+            setTotalScore(data.results.length);
             setIsReady(true);
+            console.log(data.results);
           } else {
             alert("No question found. Please select different option.");
           }
-
-          console.log(data.results);
-          console.log("data length:", data.results.length);
-          console.log("num question: ", formData.trivia_number_question);
-          setQuestionArray(shuffleArray(data.results));
-          setTotalScore(data.results.length);
         }
       }
     } catch (e) {
@@ -84,9 +89,24 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("useEffect fetch");
-    fetchData(url);
+    //console.log("useEffect fetch");
+    urlRef.current = `https://opentdb.com/api.php?amount=${formData.trivia_number_question}&category=${formData.trivia_category}&difficulty=${formData.trivia_difficulty}&type=multiple`;
+
+    fetchData(urlRef.current);
   }, [formData, isNewGame]);
+
+  function handleFormChange(event) {
+    //console.log(event);
+    setIsReady(false);
+    //console.log(formData);
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
+  }
 
   const shuffleArray = (originalArray) => {
     const newArray = [];
@@ -133,6 +153,9 @@ function App() {
     // console.log(newArray);
     return newArray;
   };
+
+  const newGameSound = useRef(new Audio("/new_game_sound.wav"));
+  const selectSound = useRef(new Audio("/select_sound.wav"));
 
   const gameMusic = useRef(new Audio("/game_music.mp3"));
   const endgameMusic = useRef(new Audio("/endgame_music.mp3"));
@@ -258,10 +281,6 @@ function App() {
   }, [questionArray]);
 
   useEffect(() => {
-    //console.log("Updated score: ", score);
-  }, [score]);
-
-  useEffect(() => {
     if (showCorrectAnswer) {
       setQuestionArray((prevQuestionArray) => {
         return prevQuestionArray.map((prevObj) => {
@@ -305,19 +324,6 @@ function App() {
     setIsReady(false);
     setShowCorrectAnswer(false);
   };
-
-  function handleFormChange(event) {
-    //console.log(event);
-    setIsReady(false);
-    console.log(formData);
-    const { name, value, type, checked } = event.target;
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: type === "checkbox" ? checked : value,
-      };
-    });
-  }
 
   return isNewGame ? (
     <div className="main-container">
