@@ -383,7 +383,7 @@ function App() {
         ></button>
         <MultiChoice
           className="multi-choice"
-          fetchURL={url}
+          fetchURL={urlRef.current}
           formData={formData}
           questionArray={questionArray}
           handleChoiceClick={handleChoiceClick}
