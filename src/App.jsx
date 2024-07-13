@@ -342,6 +342,9 @@ function App() {
           className="button-mute"
         ></button>
         <h1>Facts Game</h1>
+        <h2 className="h2-subtitle">
+          Choose Your Challenge, Master Your Knowledge!
+        </h2>
         <p className="p-new-game">
           This is a facts game with 4 multiple choices. Choose one correct
           answer.

@@ -435,6 +435,11 @@ select {
   justify-content: flex-start;
 }
 
+.h2-subtitle {
+  color: var(--primary-color);
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
   .p-url {
     font-size: 1rem;

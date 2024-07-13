@@ -1,6 +1,6 @@
-# Project Name
+# FactsGame
 
-## Project Slogan
+## Choose Your Challenge, Master Your Knowledge!
 
 _Short, one-liner, catchy and easy to understand_
 
