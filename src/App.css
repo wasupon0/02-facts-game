@@ -344,6 +344,9 @@ main.new-game > p {
 
 .total-score {
   color: var(--primary-color);
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: space-between;
   margin-bottom: 0;
   margin-top: 2rem;
   text-align: center;

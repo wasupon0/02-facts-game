@@ -32,6 +32,18 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(formData.trivia_number_question * 5); // Set timer based on num question
   const [isActive, setIsActive] = useState(false);
 
+  const [bestTime, setBestTime] = useState(() => {
+    // Retrieve the best time from local storage or set it to null if not found
+    const savedTime = localStorage.getItem("bestTime");
+    return savedTime ? parseInt(savedTime) : null;
+  });
+
+  const [highScore, setHighScore] = useState(() => {
+    // Retrieve the high score from local storage or set it to null if not found
+    const savedScore = localStorage.getItem("highScore");
+    return savedScore ? parseInt(savedScore) : null;
+  });
+
   const blinkClass = timeLeft < 20 ? "blink" : "";
 
   const formatTime = (time) => {
@@ -375,7 +387,7 @@ function App() {
     setTimeLeft(formData.trivia_number_question * 5); // Reset timer when start game
   };
 
-  const endGame = () => {
+  const endGame = (timeLeft) => {
     stopPinchMusic();
     stopGameMusic();
     playEndGameMusic();
@@ -384,6 +396,16 @@ function App() {
     setShowCorrectAnswer((prev) => !prev);
 
     setIsActive(false);
+
+    if (!highScore || score > highScore) {
+      localStorage.setItem("highScore", score);
+      setHighScore(score);
+    }
+
+    if (!bestTime || timeLeft > bestTime) {
+      localStorage.setItem("bestTime", timeLeft);
+      setBestTime(timeLeft);
+    }
   };
 
   const restartGame = () => {
@@ -474,7 +496,7 @@ function App() {
           showCorrectAnswer={showCorrectAnswer}
           isMuted={isMuted}
         />
-        <button className="button-calculate" onClick={endGame}>
+        <button className="button-calculate" onClick={() => endGame(timeLeft)}>
           Send
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -483,9 +505,20 @@ function App() {
         </button>
         {isEndGame ? (
           <>
-            <h1 className="total-score">
-              Total Score: {`${score}/${totalScore}`}
-            </h1>
+            <div className="total-score">
+              <span>
+                <strong>High Score:</strong>
+                <br /> {highScore}
+              </span>
+              <span>
+                <strong>Total Score:</strong> <br />
+                {`${score}/${totalScore}`}
+              </span>
+              <span>
+                <strong>Best Time:</strong> <br />
+                {formatTime(bestTime)}
+              </span>
+            </div>
             <Confetti />
           </>
         ) : (
