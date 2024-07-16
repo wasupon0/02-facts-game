@@ -3,6 +3,8 @@ import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
 import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import sampleArray from "./assets/sampleArray";
 import Confetti from "./components/Confetti";
@@ -26,6 +28,60 @@ function App() {
     trivia_difficulty: "easy",
     trivia_number_question: "5",
   });
+
+  const [timeLeft, setTimeLeft] = useState(formData.trivia_number_question * 5); // Set timer based on num question
+  const [isActive, setIsActive] = useState(false);
+
+  const blinkClass = timeLeft < 20 ? "blink" : "";
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`; // Adding leading zero to seconds
+  };
+
+  const timerIntervalRef = useRef(null);
+
+  useEffect(() => {
+    // Clear existing interval to prevent duplicates
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+    }
+    if (isActive) {
+      timerIntervalRef.current = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(timerIntervalRef.current); // Clear the interval to stop the timer
+            setIsActive(false);
+
+            gameOverSound.current.volume = 0.25;
+            gameOverSound.current.play();
+            return 0; // Reset the timer or prevent it from going negative
+          }
+
+          if (prevTime < 23 && prevTime > 1) {
+            pinchSound.current.volume = 0.25;
+            pinchSound.current.play();
+            stopGameMusic();
+          }
+
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      if (timeLeft === 0) {
+        toast.error("Game Over, click the send button to see the score");
+      }
+    }
+
+    // Cleanup interval on component unmount or before setting a new interval
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
+    };
+  }, [isActive]);
+
   const controllerRef = useRef();
   const urlRef = useRef(
     `https://opentdb.com/api.php?amount=${"5"}&category=${"9"}&difficulty=${"easy"}&type=multiple`
@@ -160,6 +216,9 @@ function App() {
   const gameMusic = useRef(new Audio("/game_music.mp3"));
   const endgameMusic = useRef(new Audio("/endgame_music.mp3"));
 
+  const pinchSound = useRef(new Audio("/pinch_sound.mp3"));
+  const gameOverSound = useRef(new Audio("/gameover_sound.mp3"));
+
   const playGameMusic = () => {
     gameMusic.current.volume = 0.15;
     gameMusic.current.loop = true;
@@ -172,6 +231,11 @@ function App() {
     gameMusic.current.currentTime = 0; // Reset playback position
   };
 
+  const stopPinchMusic = () => {
+    pinchSound.current.pause();
+    pinchSound.current.currentTime = 0;
+  };
+
   const playEndGameMusic = () => {
     endgameMusic.current.volume = 0.15;
     endgameMusic.current.play();
@@ -180,7 +244,7 @@ function App() {
   const stopEndGameMusic = () => {
     endgameMusic.current.volume = 0.15;
     endgameMusic.current.pause();
-    endgameMusic.current.currentTime = 0; // Reset playback position
+    endgameMusic.current.currentTime = 0;
   };
 
   const playNewGameSound = () => {
@@ -304,14 +368,19 @@ function App() {
 
     setScore(0);
     setIsNewGame(false);
+    setIsActive(true);
+    setTimeLeft(formData.trivia_number_question * 5); // Reset timer when start game
   };
 
   const endGame = () => {
+    stopPinchMusic();
     stopGameMusic();
     playEndGameMusic();
     playNewGameSound();
     setIsEndGame(true);
     setShowCorrectAnswer((prev) => !prev);
+
+    setIsActive(false);
   };
 
   const restartGame = () => {
@@ -341,7 +410,8 @@ function App() {
           }}
           className="button-mute"
         ></button>
-        <h1>Facts Game</h1>
+
+        <h1>FactsGame</h1>
         <h2 className="h2-subtitle">
           Choose Your Challenge, Master Your Knowledge!
         </h2>
@@ -384,6 +454,9 @@ function App() {
           }}
           className="button-mute"
         ></button>
+        <span className={`span-timer ${blinkClass}`}>
+          Time: {formatTime(timeLeft)}
+        </span>
         <MultiChoice
           className="multi-choice"
           fetchURL={urlRef.current}
@@ -395,7 +468,7 @@ function App() {
           isMuted={isMuted}
         />
         <button className="button-calculate" onClick={endGame}>
-          Calculate Score
+          Send
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="button-restart" onClick={restartGame}>
@@ -417,6 +490,17 @@ function App() {
         <br />
         <strong>Music 2:</strong> What I Want - By PØW
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={false}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="colored"
+      />
     </>
   );
 }

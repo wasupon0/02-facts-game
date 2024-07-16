@@ -428,6 +428,33 @@ select {
   outline: 2px solid var(--accent-color);
 }
 
+@keyframes blink {
+  0%,
+  100% {
+    background-color: var(--accent-color);
+  }
+  50% {
+    background-color: var(--secondary-color);
+  }
+}
+
+.span-timer {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  color: var(--third-color);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0 0.5rem 0 0.45rem;
+
+  position: fixed;
+  right: 10px;
+  top: 60px;
+}
+
+.blink {
+  animation: blink 1s linear infinite; /* Apply the blinking animation */
+}
+
 .span_data_container {
   display: flex;
   flex-wrap: wrap;
