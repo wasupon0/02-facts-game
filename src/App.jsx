@@ -96,6 +96,8 @@ function App() {
     selectSound.current.muted = isMuted;
     gameMusic.current.muted = isMuted;
     endgameMusic.current.muted = isMuted;
+    pinchSound.current.muted = isMuted;
+    gameOverSound.current.muted = isMuted;
   }, [isMuted]);
 
   function decode(html) {
@@ -494,6 +496,8 @@ function App() {
         <strong>Music 1:</strong> Lend a Hand - By Ryan James Carr
         <br />
         <strong>Music 2:</strong> What I Want - By PØW
+        <br />
+        <strong>Music 3:</strong> Virtuoso - SATV Music
       </div>
       <ToastContainer
         position="bottom-center"
