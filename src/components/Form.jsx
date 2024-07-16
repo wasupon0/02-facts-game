@@ -1,4 +1,4 @@
-function Form({ formData, handleFormChange }) {
+function Form({ formData, handleFormChange, isReady }) {
   return (
     <form>
       <label htmlFor="trivia_category" className="form-label">
@@ -9,6 +9,7 @@ function Form({ formData, handleFormChange }) {
         value={formData.trivia_category}
         onChange={handleFormChange}
         name="trivia_category"
+        disabled={!isReady}
       >
         <option value="9">General Knowledge</option>
         <option value="10">Entertainment: Books</option>
@@ -46,6 +47,7 @@ function Form({ formData, handleFormChange }) {
         value={formData.trivia_difficulty}
         onChange={handleFormChange}
         name="trivia_difficulty"
+        disabled={!isReady}
       >
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
@@ -62,6 +64,7 @@ function Form({ formData, handleFormChange }) {
         value={formData.trivia_number_question}
         onChange={handleFormChange}
         name="trivia_number_question"
+        disabled={!isReady}
       >
         <option value="5">5</option>
         <option value="10">10</option>

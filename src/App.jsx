@@ -136,6 +136,7 @@ function App() {
             console.log(data.results);
           } else {
             alert("No question found. Please select different option.");
+            setIsReady(true);
           }
         }
       }
@@ -420,7 +421,11 @@ function App() {
           answer.
         </p>
 
-        <Form formData={formData} handleFormChange={handleFormChange} />
+        <Form
+          formData={formData}
+          handleFormChange={handleFormChange}
+          isReady={isReady}
+        />
 
         {isReady ? (
           <>
