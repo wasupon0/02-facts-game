@@ -29,7 +29,9 @@ function App() {
     trivia_number_question: "5",
   });
 
-  const [timeLeft, setTimeLeft] = useState(formData.trivia_number_question * 5); // Set timer based on num question
+  const [timeLeft, setTimeLeft] = useState(
+    formData.trivia_number_question * 20
+  ); // Set timer based on num question
   const [isActive, setIsActive] = useState(false);
 
   const [bestTime, setBestTime] = useState(() => {
