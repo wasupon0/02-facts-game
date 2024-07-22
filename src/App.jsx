@@ -509,7 +509,7 @@ function App() {
           <>
             <div className="total-score">
               <span>
-                <strong>High Score:</strong>
+                <strong>Highest Score:</strong>
                 <br /> {highScore}
               </span>
               <span>
