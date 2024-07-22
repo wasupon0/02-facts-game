@@ -30,7 +30,7 @@ function App() {
   });
 
   const [timeLeft, setTimeLeft] = useState(
-    formData.trivia_number_question * 20
+    formData.trivia_number_question * 10
   ); // Set timer based on num question
   const [isActive, setIsActive] = useState(false);
 
@@ -386,7 +386,7 @@ function App() {
     setScore(0);
     setIsNewGame(false);
     setIsActive(true);
-    setTimeLeft(formData.trivia_number_question * 20); // Reset timer when start game
+    setTimeLeft(formData.trivia_number_question * 10); // Reset timer when start game
   };
 
   const endGame = (timeLeft) => {
