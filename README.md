@@ -1,8 +1,6 @@
 # FactsGame
 
-## Choose Your Challenge, Master Your Knowledge!
-
-_Short, one-liner, catchy and easy to understand_
+_Choose Your Challenge, Master Your Knowledge!_
 
 ![Screenshot 1 Hero](./public/readme-img-01.png)
 
