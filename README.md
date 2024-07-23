@@ -23,6 +23,8 @@ _Choose Your Challenge, Master Your Knowledge!_
 <br/>
 <br/>
 
-https://github.com/user-attachments/assets/446fde20-d1be-45c1-a6d6-cc513d849ca2
 
-github readme does not support html5 video tag
+https://github.com/user-attachments/assets/771d8af9-e7ae-458c-af4a-f435538b13d2
+
+https://github.com/user-attachments/assets/806e2fbe-260b-4d93-a6d6-851877f4ea5f
+
