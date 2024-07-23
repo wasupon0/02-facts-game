@@ -4,7 +4,7 @@
 
 _Short, one-liner, catchy and easy to understand_
 
-![Screenshot 1 Hero](./public/project-02-cover.png)
+![Screenshot 1 Hero](./public/readme-img-01.png)
 
 ## Contents
 
