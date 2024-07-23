@@ -4,12 +4,6 @@ _Choose Your Challenge, Master Your Knowledge!_
 
 ![Screenshot 1 Hero](./public/readme-img-01.png)
 
-## Contents
-
-- [Overview and Features](#overview-and-features)
-- [Tech Stack](#tech-stack)
-- [Usage Guide](#usage-guide)
-
 ## Overview and Features
 
 - Intro paragraph about what this project is, what it does, and how it’s used.
