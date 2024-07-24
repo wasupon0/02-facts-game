@@ -27,7 +27,6 @@ FactsGame is an interactive platform where players can test their knowledge thro
 - Leverages Open Trivia Database for fetching trivia questions.
 - Retrieves data via GET requests. Allows customization with parameters: amount (number of questions), category, and difficulty.
 - Dynamically generates quiz content for a diverse and challenging user experience.
-
 <br/><br/>
 
 ## Features
