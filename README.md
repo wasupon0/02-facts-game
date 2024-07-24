@@ -1,6 +1,6 @@
 # FactsGame
 _Choose Your Challenge, Master Your Knowledge!_
-![Screenshot 1 Hero](./public/readme-img-01.png)
+![hero](./public/readme-img-01.png)
 
 
 ## Overview
@@ -8,7 +8,7 @@ FactsGame is an interactive platform where players can test their knowledge thro
 
 
 ## Tech Stack
-![Diagram](./public/project-02-filled.png)
+![diagram](./public/project-02-filled.png)
 
 ### Front-End
 RentFinder's front-end is built with Next.js, enabling fast, SEO-friendly applications through server-side rendering and static site generation. Tailwind CSS is used for rapid UI development with a clean, maintainable codebase, ensuring a seamless user experience for navigating listings and searching properties.
@@ -25,16 +25,16 @@ https://github.com/user-attachments/assets/771d8af9-e7ae-458c-af4a-f435538b13d2
 Before you start the game, you can select the type of questions. You can choose from a variety of categories, with 3 difficulty levels (easy, medium, hard), and number up to 50 questions.
 
 ### Game Play Feature
-![Screenshot 1 Hero](./assets/img/project-02-play-note-hover.png)
+![project-02-play-note-hover](./src/assets/img/project-02-play-note-hover.png)
 Once you start the game, the timer will start counting down. You will be given a number of questions with 4 multiple choice answers. Choose 1 correct answer within the time limit.
 
 If the time runs out before you click the Send button, it is Game Over.
 
-![Screenshot 1 Hero](./assets/img/project-02-gameover.png)
+![project-02-gameover](./src/assets/img/project-02-gameover.png)
 To see correct answer and the score you got, click the Send button at the bottom of the page.
 
 ### Calculate Score Feature
-![Screenshot 1 Hero](./assets/img/project-02-score-note.png)
+![project-02-score-note](./src/assets/img/project-02-score-note.png)
 
 After you click the Send button, you will see the correct answer for each question. The correct answer will be highlighted in green. If you choose wrong answer, it will be highlighted in red.
 
@@ -43,7 +43,6 @@ At the bottom of the page, you will see the high score of all your game plays. T
 Click Restart Game button will go to first page and selecting type of questions to play again.
 
 ### Demo
-
 https://github.com/user-attachments/assets/806e2fbe-260b-4d93-a6d6-851877f4ea5f
 
 Let's see a demo game! Try turn on music ♫
