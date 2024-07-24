@@ -1,6 +1,6 @@
 # FactsGame
 _Choose Your Challenge, Master Your Knowledge!_
-
+<br/><br/>
 ![hero](./public/readme-img-01.png)
 
 
