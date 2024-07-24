@@ -16,11 +16,18 @@ FactsGame is an interactive platform where players can test their knowledge thro
 
 ### Front-End
 
-RentFinder's front-end is built with Next.js, enabling fast, SEO-friendly applications through server-side rendering and static site generation. Tailwind CSS is used for rapid UI development with a clean, maintainable codebase, ensuring a seamless user experience for navigating listings and searching properties.
+- Built with React for dynamic component rendering and ensures an interactive and responsive user interface.
+- It uses useState hook to manage the game state, such as current questions, user answers, and score tracking, ensuring real-time updates and interactivity.
+- When handles data fetching from the API. It uses useEffect hook to update the game state when new questions are retrieved, and manages other side effects like playing sounds when the user interacts with the game.
+- Utilizes Vite for fast build performance and optimized development.
+- Integrates sound and music for enhanced user engagement and immersive gaming experience.
 
-### Back-End
+### Public API
 
-The back-end of RentFinder leverages Next.js as a full-stack solution, utilizing the App Router for intuitive and scalable page routing and Route Handlers for managing API endpoints efficiently. NextAuth.js is integrated for seamless Google authentication, and middleware functions ensure secure and optimized request processing, enhancing the overall robustness and security of the application.
+- Leverages Open Trivia Database for fetching trivia questions.
+- Retrieves data via GET requests. Allows customization with parameters: amount (number of questions), category, and difficulty.
+- Dynamically generates quiz content for a diverse and challenging user experience.
+
 <br/><br/>
 
 ## Features
